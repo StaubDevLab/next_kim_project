@@ -12,12 +12,12 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/app/_components/ui/navigation-menu"
 import {useSession} from "next-auth/react";
 
 import {usePathname, useSearchParams} from "next/navigation";
 import {useCategories} from "@/utils/hooks/useCategories";
-import {Category} from ".prisma/client";
+import {Category} from "@prisma/client";
 
 
 export default function HeaderNavigation() {

@@ -1,6 +1,6 @@
-import {Card, CardHeader} from "@/components/ui/card";
+import {Card, CardHeader} from "@/app/_components/ui/card";
 import * as React from "react";
-import {Skeleton} from "@/components/ui/skeleton";
+import {Skeleton} from "@/app/_components/ui/skeleton";
 
 export default function ServiceCardSkeleton() {
     return (

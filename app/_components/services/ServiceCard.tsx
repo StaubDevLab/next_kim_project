@@ -1,19 +1,19 @@
 import * as React from "react"
 
-import {Button} from "@/components/ui/button"
+import {Button} from "@/app/_components/ui/button"
 import {
     Card,
     CardContent,
-    CardDescription,
+
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "@/app/_components/ui/card"
 import Image from "next/image";
-import {Service} from ".prisma/client";
-import {Badge} from "@/components/ui/badge";
+import {Service} from "@/prisma/client";
+import {Badge} from "@/app/_components/ui/badge";
 import {Users, BadgeEuro, Timer} from "lucide-react";
-import {AspectRatio} from "@/components/ui/aspect-ratio"
+
 
 
 export default function ServiceCard({service}: { service: Service }) {

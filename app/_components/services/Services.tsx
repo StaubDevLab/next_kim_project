@@ -1,11 +1,9 @@
 'use client'
-import PageContainer from "@/components/page-container";
-import ServiceCard from "@/components/services/ServiceCard";
+import PageContainer from "@/app/_components/ui/page-container";
+import ServiceCard from "@/app/_components/services/ServiceCard";
 import {useServices} from "@/utils/hooks/useServices";
-import { Skeleton } from "@/components/ui/skeleton"
-import {Service} from ".prisma/client";
-import SectionSeparator from "@/components/ui/section-separator";
-import ServiceCardSkeleton from "@/components/services/ServiceCardSkeleton";
+import {Service} from "@prisma/client";
+import ServiceCardSkeleton from "@/app/_components/services/ServiceCardSkeleton";
 import {useSearchParams} from "next/navigation";
 
 export function Services() {

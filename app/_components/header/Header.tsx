@@ -1,10 +1,9 @@
 import React from 'react';
-import PageContainer from "@/components/page-container";
-import HeaderNavigation from "@/components/header/HeaderNavigation";
-import {Button} from "@/components/ui/button";
-import HeaderLogo from "@/components/header/HeaderLogo";
-import ResponsiveMenu from "@/components/header/ResponsiveMenu";
-import HeaderButton from "@/components/header/HeaderButton";
+import PageContainer from "@/app/_components/ui/page-container";
+import HeaderNavigation from "@/app/_components/header/HeaderNavigation";
+import HeaderLogo from "@/app/_components/header/HeaderLogo";
+import ResponsiveMenu from "@/app/_components/header/ResponsiveMenu";
+import HeaderButton from "@/app/_components/header/HeaderButton";
 
 const Header = () => {
     return (

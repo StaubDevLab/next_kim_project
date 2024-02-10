@@ -1,13 +1,13 @@
 'use client'
 import React from 'react';
-import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
+import {Sheet, SheetContent, SheetTrigger} from "@/app/_components/ui/sheet";
 import {Menu} from "lucide-react";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
 
-import HeaderLogo from "@/components/header/HeaderLogo";
+
+import HeaderLogo from "@/app/_components/header/HeaderLogo";
 import {useSession} from "next-auth/react";
-import HeaderButton from "@/components/header/HeaderButton";
+import HeaderButton from "@/app/_components/header/HeaderButton";
 
 
 const ResponsiveMenu = () => {
