@@ -1,6 +1,6 @@
 'use client'
 import {useDispatch} from "react-redux";
-import {Button} from "@/components/ui/button";
+import {Button} from "@/app/_components/ui/button";
 import {open } from "@/stores/dialog-slice";
 import {Service} from ".prisma/client";
 

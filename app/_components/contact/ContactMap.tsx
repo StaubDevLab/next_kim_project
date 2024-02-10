@@ -1,9 +1,8 @@
 'use client'
-import { MapContainer, Marker, TileLayer, Tooltip, Popup } from "react-leaflet"
+import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
-import {iconMap} from "@/utils/Icon";
 import L from "leaflet";
 
 export default function ContactMap(props: any) {

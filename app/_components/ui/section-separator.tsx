@@ -1,5 +1,5 @@
 import React from 'react';
-import {Separator} from "@/components/ui/separator";
+import {Separator} from "@/app/_components/ui/separator";
 
 function SectionSeparator({title}: { title: string }) {
     return (

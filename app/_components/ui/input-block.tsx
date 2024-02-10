@@ -1,5 +1,5 @@
-import {Label} from "@/components/ui/label";
-import {Input} from "@/components/ui/input";
+import {Label} from "@/app/_components/ui/label";
+import {Input} from "@/app/_components/ui/input";
 import {FieldErrors, FieldValue} from "react-hook-form";
 
 export default function InputBlock({register,name, label, required, placeholder, type,autoComplete, errors}:{register: any, name: string, label: string, required: boolean, placeholder: string, type: string,autoComplete:string|undefined, errors: any}) {

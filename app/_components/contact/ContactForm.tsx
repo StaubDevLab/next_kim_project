@@ -1,16 +1,14 @@
 'use client'
 import {Form, useForm, Controller} from "react-hook-form";
-import {Label} from "@/components/ui/label";
-import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
-import {Button} from "@/components/ui/button";
+import {Label} from "@/app/_components/ui/label";
+import {Textarea} from "@/app/_components/ui/textarea";
+import {Button} from "@/app/_components/ui/button";
 import {useState} from "react";
-import InputBlock from "@/components/ui/input-block";
-import {Resend} from 'resend';
+import InputBlock from "@/app/_components/ui/input-block";
 import axios from "axios";
-import {toast} from "@/components/ui/use-toast";
+import {toast} from "@/app/_components/ui/use-toast";
 import {BadgeCheck, BadgeX} from "lucide-react";
-import {Toaster} from "@/components/ui/toaster";
+import {Toaster} from "@/app/_components/ui/toaster";
 
 export function ContactForm() {
     const {control, register, formState: {errors}, reset} = useForm({
