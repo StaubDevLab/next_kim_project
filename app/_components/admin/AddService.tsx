@@ -10,7 +10,7 @@ import {
 import {Category, Service} from "@prisma/client";
 import {Button} from "@/app/_components/ui/button";
 import {useDispatch, useSelector} from "react-redux";
-import {open as openDialog, close as closeDialog} from "@/stores/dialog-slice";
+import {add, close as closeDialog} from "@/stores/dialog-slice";
 import {Form, useForm, Controller} from "react-hook-form";
 import {Input} from "@/app/_components/ui/input";
 import {BaseSyntheticEvent, useEffect, useState} from "react";
@@ -24,13 +24,12 @@ import axios from "axios";
 import {queryClient} from "@/providers/query-provider";
 import UpdateActive from "@/app/_components/admin/UpdateActive";
 import dynamic from "next/dynamic";
-import {Skeleton} from "../ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 import {useCategories} from "@/utils/hooks/useCategories";
 
 const ReactQuill = dynamic(() => import("react-quill"), {ssr: false})
-export default function UpdateService() {
+export default function UpdateService({service}: { service: Service | undefined }) {
     const dispatch = useDispatch();
-    const service = useSelector((state: any) => state.dialog.service)
     // @ts-ignore
     const {open} = useSelector((state) => state.dialog)
     const [imageObjectUrl, setImageObjectUrl] = useState("");
@@ -41,7 +40,7 @@ export default function UpdateService() {
         setValue,
         control,
         formState: {errors},
-        clearErrors,
+        handleSubmit,
         getValues
     } = useForm({
         defaultValues: {
@@ -54,48 +53,13 @@ export default function UpdateService() {
             image: "",
             categoryId: "",
             slug: "",
-            id: ""
+            id:""
         }
     })
 
-    useEffect(() => {
-        clearErrors()
-        setImageObjectUrl("")
-        if (service) {
+    const {mutateAsync} = useMutation({
 
-            setValue('title', service.title)
-            setValue('description', service.description)
-            setValue('price', service.price)
-            setValue('slug', service.slug)
-            setValue('id', service.id)
-            setValue('shortDescription', service.shortDescription)
-            setValue('public', service.public)
-            setValue('duration', service.duration)
-            setValue("image", service.image)
-            setValue('categoryId', service.categoryId)
-        } else {
-
-            setValue('title', "")
-            setValue('description', "")
-            setValue('price', 0)
-            setValue('shortDescription', "")
-            setValue('public', "")
-            setValue('duration', "")
-            setValue("image", "")
-            setValue('categoryId', "")
-        }
-    }, [service, open]);
-    const {mutateAsync: updateMutate} = useMutation({
-
-        mutationFn: (data: Partial<Service>) => axios.patch(`/api/services/${data.id}`, data),
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({queryKey: ['services']})
-            dispatch(closeDialog())
-        }
-    })
-    const {mutateAsync: addMutate} = useMutation({
-
-        mutationFn: (data: Partial<Service>) => axios.post(`/api/services/`, data),
+        mutationFn: (data: Partial<Service>) => axios.post(`/api/services/${data.id}`, data),
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ['services']})
             dispatch(closeDialog())
@@ -128,13 +92,13 @@ export default function UpdateService() {
             data.image = image?.imageUrl || service?.image
             data.price = Number(data.price)
 
-            const mutation = service ? await updateMutate(data) : await addMutate(data)
-            console.log(mutation)
+            const mutation = await mutateAsync(data)
+
             toast({
                 className: "bg-green-700 text-white z-20",
                 description: (
                     <h2>
-                        <BadgeCheck className={'inline mr-1'}/> {mutation?.data?.message}
+                        <BadgeCheck className={'inline mr-1'}/> Service ajouté avec succès !
                     </h2>
 
                 ),
@@ -155,8 +119,10 @@ export default function UpdateService() {
     }
 
 
+
+
     return (
-        <Dialog open={open} onOpenChange={(open) => dispatch(open ? openDialog(service) :  closeDialog())}>
+        <Dialog open={open} onOpenChange={(open) => dispatch(open ? add() : closeDialog())}>
 
             <DialogContent className="lg:max-w-screen-lg overflow-y-auto max-h-[80vh]">
 
@@ -168,17 +134,17 @@ export default function UpdateService() {
                     </DialogHeader>
 
 
-                    {service && <Input type="hidden" {...register("id")} />}
+
                     <div className="flex items-center space-x-2 mt-4">
                         <div className="grid flex-1 gap-2">
                             <div className={"px-3"}>
                                 <div className="mb-6">
-                                    {service && service.image || imageObjectUrl ?
+                                    {service && service.image ?
                                         (
                                             <div className={"relative w-40 h-40 mx-auto mb-4"}>
                                                 <Image src={imageObjectUrl || service.image} fill alt={"image"}/>
                                             </div>
-                                        ) : <Skeleton className="h-[125px] w-[250px] rounded-xl mx-auto my-4"/>
+                                        ) : <Skeleton className="h-[125px] w-[250px] rounded-xl"/>
 
                                     }
                                     <Input type="file" {...register("image", {
@@ -198,6 +164,7 @@ export default function UpdateService() {
                                     })} />
 
                                 </div>
+
                                 <div className={"flex flex-col gap-2 mb-4"}>
                                     <Label htmlFor="title">Nom du service<span
                                         className={"text-red-600"}>*</span>:</Label>
@@ -207,17 +174,18 @@ export default function UpdateService() {
                                         <p className={'text-red-600 font-light text-sm mb-2'}>{errors.title.message}</p>}
                                 </div>
                                 <div className={"flex flex-col gap-2 mb-4"}>
-                                    <Label htmlFor="title">Catégorie :</Label>
+                                    <Label htmlFor="title">Catégorie<span
+                                        className={"text-red-600"}>*</span>:</Label>
                                     <select
-                                        className={"bg-background text-foreground border rounded-md p-2"} {...register("categoryId", {required: false})}>
+                                        className={"bg-background text-foreground border rounded-md p-2"} {...register("categoryId")}>
                                         {categories && categories?.map((category: Category) => (
 
                                             <option key={category.id} value={category.id}>{category.title}</option>
                                         ))}
 
                                     </select>
-                                    {errors?.categoryId &&
-                                        <p className={'text-red-600 font-light text-sm mb-2'}>{errors.categoryId.message}</p>}
+                                    {errors?.title &&
+                                        <p className={'text-red-600 font-light text-sm mb-2'}>{errors.title.message}</p>}
                                 </div>
                                 <div className={"flex flex-col gap-2 mb-4"}>
                                     <Label htmlFor="duration">Duré du service<span

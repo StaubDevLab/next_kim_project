@@ -52,7 +52,7 @@ export default function HeroSection() {
                 </div>
             </div>
             <div className={"px-2 lg:w-full flex-grow-2"}>
-                <Image width={500} height={500} src={"/hero-photo.png"} className={"lg:min-w-[500px] transition-transform duration-500 ease-in-out hover:scale-110"}
+                <Image width={500} height={500} src={"/assets/hero-photo.png"} className={"lg:min-w-[500px] transition-transform duration-500 ease-in-out hover:scale-110"}
                        alt={"Paysage artistique naturel encerclant un portrait central obscurci"}/>
             </div>
         </div>

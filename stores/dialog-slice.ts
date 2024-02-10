@@ -11,8 +11,10 @@ const dialogSlice = createSlice({
     } as MyState,
     reducers: {
         open(state, action) {
+            console.log(action.payload)
             state.open = true
             state.service = action ? action.payload : null
+
         },
         close(state) {
             state.open = false
@@ -22,11 +24,13 @@ const dialogSlice = createSlice({
 
         },
         edit(state, action) {
+            state.open = true
             state.edit = true
             state.add = false
+            state.service = action ? action.payload : null
 
         },
-        add(state, action) {
+        add(state) {
             state.open = true
             state.add = true
             state.edit = false

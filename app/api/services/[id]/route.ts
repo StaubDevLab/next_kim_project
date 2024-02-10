@@ -3,7 +3,7 @@ import {authOptions} from "@/lib/auth-options";
 import {NextResponse} from "next/server";
 import prisma from "@/lib/db";
 
-export const PATCH = async (req:Request, res:Request, {params}: {params: {id: string}}) => {
+export const PATCH = async (req:Request,  {params}: { params: { id: string } }) => {
     const session = await getServerSession(authOptions);
     const {id} = params
 

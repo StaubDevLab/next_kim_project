@@ -5,7 +5,7 @@ export function About() {
     return (
         <section className={"flex flex-col"}>
             <PageContainer>
-                <AboutParagraph position={"left"} imageUrl={"/img/about/ABOUT_1.png"}
+                <AboutParagraph position={"left"} imageUrl={"/assets/about/ABOUT_1.png"}
                                 alternatifText={"Personne recevant un massage ou une thérapie physique dans un cadre intérieur"}
                                 title={"Le Magnétisme, une approche complémentaire et à disposition de tous :"}>
 
@@ -40,7 +40,7 @@ export function About() {
 
                 </AboutParagraph>
                 <AboutParagraph position={"right"}
-                                imageUrl={"/img/about/ABOUT_2.png"}
+                                imageUrl={"/assets/about/ABOUT_2.png"}
                                 title={"Le Tarot, une découverte passionnante :"}
                                 alternatifText={"Deux personnes engagées dans une séance de lecture de cartes dans un cadre intérieur"}>
 
@@ -74,7 +74,7 @@ export function About() {
 
                 </AboutParagraph>
                 <AboutParagraph position={"left"}
-                                imageUrl={"/img/about/ABOUT_3.png"}
+                                imageUrl={"/assets/about/ABOUT_3.png"}
                                 title={"Conseils en entreprise :"}
                                 alternatifText={"Plusieurs mains de personnes diverses tenant des pièces de puzzle dorées, symbolisant le travail d’équipe ou la collaboration"}>
 
@@ -92,7 +92,7 @@ export function About() {
 
                 </AboutParagraph>
                 <AboutParagraph position={"right"}
-                                imageUrl={"/img/about/ABOUT_4.png"}
+                                imageUrl={"/assets/about/ABOUT_4.png"}
                                 title={"Accompagnement de séjours :"}
                                 alternatifText={"Collage de plusieurs images, avec une image centrale d’une personne dont le visage est obscurci, entourée de six images plus petites représentant diverses scènes de la vie"}>
 

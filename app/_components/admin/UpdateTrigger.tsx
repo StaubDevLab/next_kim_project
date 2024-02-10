@@ -4,7 +4,7 @@ import {Button} from "@/app/_components/ui/button";
 import {open } from "@/stores/dialog-slice";
 import {Service} from ".prisma/client";
 
-export function UpdateTrigger({service} : {service: Service}) {
+export function UpdateTrigger({service} : {service: Service|undefined}) {
     const dispatch = useDispatch();
 
     return (
