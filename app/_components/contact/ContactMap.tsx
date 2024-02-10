@@ -17,7 +17,7 @@ export default function ContactMap(props: any) {
             iconSize: [50, 50],
 iconAnchor: [25, 50],
             className: "mymarker",
-            iconUrl: "/img/marker-icon.png",
+            iconUrl: "/assets/marker-icon.png",
         })}>
             <Popup>
                 <div className={"flex flex-col  justify-start"}>

@@ -7,7 +7,7 @@ export default function HeaderLogo() {
 
             <div className={'flex items-center gap-2'}>
 
-                <Link href={'/'}><Image src={'/logo.png'} width={100} height={100}  className={"transition-transform duration-500 ease-in-out hover:scale-110"} alt={'Logo représentant un soleil'}/></Link>
+                <Link href={'/'}><Image src={'/logo.png'} width={100} height={100}  className={"transition-transform duration-500 ease-in-out hover:scale-110"} alt={'Logo KR multicolore en forme de soleil'}/></Link>
             </div>
 
     );
