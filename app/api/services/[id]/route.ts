@@ -3,8 +3,9 @@ import {authOptions} from "@/lib/auth-options";
 import {NextResponse} from "next/server";
 import prisma from "@/lib/db";
 
-export const PATCH = async (req:Request, res:Request) => {
+export const PATCH = async (req:Request, res:Request, {params}: {params: {id: string}}) => {
     const session = await getServerSession(authOptions);
+    const {id} = params
 
     if (!session) {
         return NextResponse.json({error: 'Unauthorized'},
@@ -20,7 +21,7 @@ export const PATCH = async (req:Request, res:Request) => {
 
         const service = await prisma.service.update({
             where: {
-                id: body.id
+                id: id
             },
             data:{
                 ...body,
@@ -37,3 +38,4 @@ export const PATCH = async (req:Request, res:Request) => {
     }
 
 }
+

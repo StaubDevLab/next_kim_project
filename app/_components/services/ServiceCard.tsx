@@ -13,6 +13,7 @@ import Image from "next/image";
 import {Service} from "@prisma/client";
 import {Badge} from "@/app/_components/ui/badge";
 import {Users, BadgeEuro, Timer} from "lucide-react";
+import Link from "next/link";
 
 
 
@@ -45,7 +46,7 @@ export default function ServiceCard({service}: { service: Service }) {
                 </CardContent>
                 <CardFooter className="flex justify-center">
 
-                    <Button>En savoir plus</Button>
+                    <Button><Link href={"/services/" + service.slug} >En savoir plus</Link></Button>
                 </CardFooter>
             </div>
         </Card>
