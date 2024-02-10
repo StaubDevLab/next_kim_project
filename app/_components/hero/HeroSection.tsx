@@ -1,9 +1,12 @@
+'use client'
 import {Button} from "@/app/_components/ui/button";
 import Image from "next/image";
 import {Badge} from "@/app/_components/ui/badge";
 import {Phone, AtSign, MapPin} from "lucide-react";
+import {useRouter} from "next/navigation";
 
 export default function HeroSection() {
+    const router = useRouter()
     return (
         <div className={"px-4 flex flex-col lg:flex-row items-center justify-center"}>
 
@@ -43,7 +46,7 @@ export default function HeroSection() {
                             mettre en lumière vos ressources intérieures, en vous aidant à libérer votre plein potentiel
                             dans tous les aspects de votre vie.</p>
                         <Button size={"lg"}
-                                className="self-center ">En
+                                className="self-center " onClick={() => router.push("/about")}>En
                             savoir plus</Button>
                     </div>
                 </div>
