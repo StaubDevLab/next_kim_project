@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import { Poppins} from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/Header";
+import Header from "@/app/_components/header/Header";
 import AuthProvider from "@/providers/auth-provider";
 import QueryProvider from "@/providers/query-provider";
 import ReduxProvider from "@/providers/redux-provider";
