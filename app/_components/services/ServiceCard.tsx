@@ -10,7 +10,7 @@ import {
     CardTitle,
 } from "@/app/_components/ui/card"
 import Image from "next/image";
-import {Service} from "@/prisma/client";
+import {Service} from "@prisma/client";
 import {Badge} from "@/app/_components/ui/badge";
 import {Users, BadgeEuro, Timer} from "lucide-react";
 

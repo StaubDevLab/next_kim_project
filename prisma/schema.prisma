@@ -18,10 +18,9 @@ model Service {
   public           String
   shortDescription String?
   description      String
-  image            String?
-  imageAlt         String?
-  active           Boolean   @default(true)
   categoryId       String?
+  active           Boolean   @default(true)
+  image            String?
   category         Category? @relation(fields: [categoryId], references: [id])
 
   @@index([categoryId])
