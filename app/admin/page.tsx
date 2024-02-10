@@ -1,12 +1,12 @@
 'use client'
-import React, { useState} from "react";
+import React, {useState} from "react";
 
-import {open } from "@/stores/dialog-slice";
+import {open} from "@/stores/dialog-slice";
 import PageContainer from "@/app/_components/ui/page-container";
 import {columns} from "@/app/admin/columns";
 import {DataTable} from "@/app/admin/data-table";
 import {useServices} from "@/utils/hooks/useServices";
-import { useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import UpdateService from "@/app/_components/admin/UpdateService";
 import {useRouter} from "next/navigation";
 import {useDispatch, useSelector} from "react-redux";
@@ -17,11 +17,11 @@ import {Button} from "@/app/_components/ui/button";
 import {UpdateTrigger} from "@/app/_components/admin/UpdateTrigger";
 
 export default function AdminPage() {
-    const [isMounted, setIsMounted] = useState(false)
-const dispatch = useDispatch();
+
+    const dispatch = useDispatch();
 
     const router = useRouter()
-    const service = useSelector((state:MyState) => state.dialog.service)
+
     const session = useSession({
         required: true, onUnauthenticated: () =>
             router.push("/api/auth/signin")
@@ -47,19 +47,20 @@ const dispatch = useDispatch();
         })
     }
 
-    console.log("GESTION SERVICES", service)
+
     return (
         <PageContainer>
             <div className={"p-10 flex flex-col gap-2 items-center"}>
 
-                {session.status === "authenticated" && services &&(<>
-                <h1 className={"text-4xl"}>Gestion des Services</h1>
+                {session.status === "authenticated" && services && (<>
+                    <h1 className={"text-4xl"}>Gestion des Services</h1>
                     <Button onClick={() => dispatch(open(undefined))}>Ajouter un service</Button>
                     <div className={"w-full px-4"}>
                         <DataTable columns={columns} data={services as any}/>
-                    </div></>)
+                    </div>
+                </>)
                 }
-                {session.status === "authenticated" && services && <UpdateService />}
+                {session.status === "authenticated" && services && <UpdateService/>}
 
             </div>
             <Toaster/>

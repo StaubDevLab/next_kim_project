@@ -15,7 +15,7 @@ import {
 } from "@/app/_components/ui/navigation-menu"
 import {useSession} from "next-auth/react";
 
-import {usePathname, useSearchParams} from "next/navigation";
+import {usePathname} from "next/navigation";
 import {useCategories} from "@/utils/hooks/useCategories";
 import {Category} from "@prisma/client";
 

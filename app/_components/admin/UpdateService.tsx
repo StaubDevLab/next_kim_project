@@ -129,7 +129,7 @@ export default function UpdateService() {
             data.price = Number(data.price)
 
             const mutation = service ? await updateMutate(data) : await addMutate(data)
-            console.log(mutation)
+
             toast({
                 className: "bg-green-700 text-white z-20",
                 description: (
@@ -163,7 +163,7 @@ export default function UpdateService() {
                 <Form control={control} onSubmit={(data) => onSubmit({data: data.data})}>
 
                     <DialogHeader>
-                        <DialogTitle>Modifier service</DialogTitle>
+                        <DialogTitle>{service ? "Modifier le service" : "Ajouter un service"}</DialogTitle>
 
                     </DialogHeader>
 
