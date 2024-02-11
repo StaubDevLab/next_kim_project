@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Service {
+  id               String    @id @default(cuid())
+  createdAt        DateTime  @default(now())
+  title            String
+  slug             String    @unique
+  price            String
+  duration         String
+  public           String
+  shortDescription String?
+  description      String
+  categoryId       String?
+  active           Boolean   @default(true)
+  image            String?
+  imageAlternatif  String?
+  category         Category? @relation(fields: [categoryId], references: [id])
+
+  @@index([categoryId])
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  title     String
+  slug      String    @unique
+  services  Service[]
+}
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?
+  access_token             String?
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Role {
+  id    String @id @default(cuid())
+  title String @unique @default("USER")
+  users User[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  roleId        String?
+  accounts      Account[]
+  sessions      Session[]
+  role          Role?     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@index([roleId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
