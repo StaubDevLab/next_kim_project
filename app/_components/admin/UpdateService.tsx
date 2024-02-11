@@ -1,17 +1,10 @@
 'use client'
-import {
-    Dialog, DialogClose,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-
-} from "@/app/_components/ui/dialog"
+import {Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle,} from "@/app/_components/ui/dialog"
 import {Category, Service} from "@prisma/client";
 import {Button} from "@/app/_components/ui/button";
 import {useDispatch, useSelector} from "react-redux";
-import {open as openDialog, close as closeDialog} from "@/stores/dialog-slice";
-import {Form, useForm, Controller} from "react-hook-form";
+import {close as closeDialog, open as openDialog} from "@/stores/dialog-slice";
+import {Controller, Form, useForm} from "react-hook-form";
 import {Input} from "@/app/_components/ui/input";
 import {BaseSyntheticEvent, useEffect, useState} from "react";
 import {Label} from "@/app/_components/ui/label";
@@ -26,6 +19,8 @@ import UpdateActive from "@/app/_components/admin/UpdateActive";
 import dynamic from "next/dynamic";
 import {Skeleton} from "../ui/skeleton";
 import {useCategories} from "@/utils/hooks/useCategories";
+import uploadFile from "@/utils/upload-image";
+import supabase from "@/lib/storage";
 
 const ReactQuill = dynamic(() => import("react-quill"), {ssr: false})
 export default function UpdateService() {
@@ -34,7 +29,7 @@ export default function UpdateService() {
     // @ts-ignore
     const {open} = useSelector((state) => state.dialog)
     const [imageObjectUrl, setImageObjectUrl] = useState("");
-    const [imageFile, setImageFile] = useState<File>();
+    const [imageLoading, setImageLoading] = useState(false)
     const {
         register,
         watch,
@@ -85,7 +80,7 @@ export default function UpdateService() {
             setValue('categoryId', "")
         }
     }, [service, open, clearErrors, setValue]);
-    const {mutateAsync: updateMutate} = useMutation({
+    const {mutateAsync: updateMutate, isPending: updatePending} = useMutation({
 
         mutationFn: (data: Partial<Service>) => axios.patch(`/api/services/${data.id}`, data),
         onSuccess: async () => {
@@ -102,21 +97,46 @@ export default function UpdateService() {
         }
     })
     const {data: categories} = useCategories()
-    const uploadImage = async () => {
 
-        try {
-            if (!imageFile) return;
-            const formData = new FormData();
-            formData.append('file', imageFile);
-            const {data} = await axios.post('/api/services/upload-image', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
+    const handleFileChange = async (event: BaseSyntheticEvent) => {
+        let file;
+        if (event.target.files) {
 
-            return data
-        } catch (e) {
-            console.log("Erreur dans l'upload image", e)
+            file = event.target.files[0]
+
+        }
+
+        if (file) {
+            setImageLoading(true)
+            try {
+                const image = await uploadFile(file)
+                const publicUrl = supabase.storage.from('services_images').getPublicUrl(image.path)
+
+                setImageObjectUrl(publicUrl.data.publicUrl)
+
+                toast({
+                    className: "bg-green-700 text-white z-20",
+                    description: (
+                        <h2>
+                            <BadgeCheck className={'inline mr-1'}/> Image chargée avec succès
+                        </h2>
+
+                    ),
+                })
+                setImageLoading(false)
+                return image
+            } catch (e) {
+                toast({
+
+                    variant: 'destructive',
+                    description: (<h2>
+                            <BadgeX className={'inline mr-1'}/> Echec upload image
+                        </h2>
+
+                    ),
+                })
+            }
+
         }
     }
 
@@ -124,8 +144,9 @@ export default function UpdateService() {
 
 
         try {
-            const image = await uploadImage()
-            data.image = image?.imageUrl || service?.image
+
+
+            data.image = imageObjectUrl || service?.image
 
             const mutation = service ? await updateMutate(data) : await addMutate(data)
 
@@ -155,7 +176,7 @@ export default function UpdateService() {
 
 
     return (
-        <Dialog open={open} onOpenChange={(open) => dispatch(open ? openDialog(service) :  closeDialog())}>
+        <Dialog open={open} onOpenChange={(open) => dispatch(open ? openDialog(service) : closeDialog())}>
 
             <DialogContent className="lg:max-w-screen-lg overflow-y-auto max-h-[80vh]">
 
@@ -172,7 +193,7 @@ export default function UpdateService() {
                         <div className="grid flex-1 gap-2">
                             <div className={"px-3"}>
                                 <div className="mb-6">
-                                    {service && service.image || imageObjectUrl ?
+                                    {!imageLoading &&service && service.image || imageObjectUrl ?
                                         (
                                             <div className={"relative w-40 h-40 mx-auto mb-4"}>
                                                 <Image src={imageObjectUrl || service.image} fill alt={"image"}/>
@@ -181,19 +202,7 @@ export default function UpdateService() {
 
                                     }
                                     <Input type="file" {...register("image", {
-                                        onChange: (event: BaseSyntheticEvent) => {
-
-                                            if (event.target.files) {
-
-                                                const file = event.target.files[0]
-
-                                                setImageFile(file)
-
-
-                                                setImageObjectUrl(URL.createObjectURL(file))
-
-                                            }
-                                        }
+                                        onChange: handleFileChange
                                     })} />
 
                                 </div>
@@ -291,7 +300,15 @@ export default function UpdateService() {
                                 Fermer
                             </Button>
                         </DialogClose>
-                        <Button type="submit">Enregistrer</Button>
+                        <Button disabled={imageLoading} type="submit">{updatePending ?
+                            <div
+                                className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                role="status">
+                            <span
+                                className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                            >Mise à jour...</span
+                            >
+                            </div> : "Enregistrer"}</Button>
                     </DialogFooter>
                 </Form>
             </DialogContent>
