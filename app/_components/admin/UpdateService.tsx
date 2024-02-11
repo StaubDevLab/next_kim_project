@@ -2,10 +2,10 @@
 import {
     Dialog, DialogClose,
     DialogContent,
-    DialogDescription, DialogFooter,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
+
 } from "@/app/_components/ui/dialog"
 import {Category, Service} from "@prisma/client";
 import {Button} from "@/app/_components/ui/button";
@@ -42,12 +42,12 @@ export default function UpdateService() {
         control,
         formState: {errors},
         clearErrors,
-        getValues
+
     } = useForm({
         defaultValues: {
             title: "",
             description: "",
-            price: 0,
+            price: "",
             shortDescription: "",
             duration: "",
             public: "",
@@ -77,14 +77,14 @@ export default function UpdateService() {
 
             setValue('title', "")
             setValue('description', "")
-            setValue('price', 0)
+            setValue('price', "")
             setValue('shortDescription', "")
             setValue('public', "")
             setValue('duration', "")
             setValue("image", "")
             setValue('categoryId', "")
         }
-    }, [service, open]);
+    }, [service, open, clearErrors, setValue]);
     const {mutateAsync: updateMutate} = useMutation({
 
         mutationFn: (data: Partial<Service>) => axios.patch(`/api/services/${data.id}`, data),
@@ -101,7 +101,7 @@ export default function UpdateService() {
             dispatch(closeDialog())
         }
     })
-    const {data: categories, isFetching: isCategoriesFetching} = useCategories()
+    const {data: categories} = useCategories()
     const uploadImage = async () => {
 
         try {
@@ -126,7 +126,6 @@ export default function UpdateService() {
         try {
             const image = await uploadImage()
             data.image = image?.imageUrl || service?.image
-            data.price = Number(data.price)
 
             const mutation = service ? await updateMutate(data) : await addMutate(data)
 
@@ -145,7 +144,7 @@ export default function UpdateService() {
 
                 variant: 'destructive',
                 description: (<h2>
-                        <BadgeX className={'inline mr-1'}/> Une erreur est survenue !
+                        <BadgeX className={'inline mr-1'}/> {messages}
                     </h2>
 
                 ),

@@ -13,11 +13,11 @@ model Service {
   createdAt        DateTime  @default(now())
   title            String
   slug             String    @unique
-  price            Float
+  price            String
   duration         String
   public           String
   shortDescription String?
-  description      String    @db.Text
+  description      String
   categoryId       String?
   active           Boolean   @default(true)
   image            String?
