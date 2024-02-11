@@ -33,7 +33,7 @@ export default function RootLayout({
       <QueryProvider>
         <AuthProvider>
           <ReduxProvider>
-            <main className={"flex flex-col justify-between  font-poppins"}>
+            <main className={"flex flex-col justify-between  font-poppins h-screen"}>
               <Header/>
 
               {children}
