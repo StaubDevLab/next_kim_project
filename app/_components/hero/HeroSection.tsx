@@ -1,12 +1,20 @@
 'use client'
+import {useState} from "react";
 import {Button} from "@/app/_components/ui/button";
 import Image from "next/image";
 import {Badge} from "@/app/_components/ui/badge";
 import {Phone, AtSign, MapPin} from "lucide-react";
 import {useRouter} from "next/navigation";
+import {CopyToClipboard} from "react-copy-to-clipboard"
+
 
 export default function HeroSection() {
     const router = useRouter()
+    const [isCopied, setIsCopied] = useState(false);
+    const handleCopy = () => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000); // Le tooltip disparaît après 2 secondes
+    };
     return (
         <div className={"px-4 flex flex-col lg:flex-row items-center justify-center"}>
 
@@ -25,17 +33,20 @@ export default function HeroSection() {
                                     {process.env.NEXT_PUBLIC_EMAIL || "contact@kimremy.com"}</Badge>
                             </a>
                         </div>
+                        <CopyToClipboard text={"1bis avenue de la Bastille, 19100 Brive-La-Gaillarde"} onCopy={handleCopy}>
 
-                        <div className={"flex flex-col text-center text-primary"}>
-                            <div className={"font-bold"}><MapPin size={20}
-                                         className={"inline mr-1"}/>Centre "Hollistic",</div>
-                            <div>1bis avenue de la Bastille</div>
-                            <div>19100 Brive-La-Gaillarde</div>
+                            <div className={"flex flex-col text-center text-primary cursor-pointer relative"}>
+                                {isCopied ? <Badge className={"absolute top-0 right-[-3.3rem] z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95"}>Copié.</Badge> : null}
 
+                                <div className={"font-bold"}><MapPin size={20}
+                                                                     className={"inline mr-1"}/>Centre &laquo;Hollistic&raquo;,
+                                </div>
+                                <div>1bis avenue de la Bastille</div>
+                                <div>19100 Brive-La-Gaillarde</div>
 
+                            </div>
 
-
-                        </div>
+                        </CopyToClipboard>
 
                     </div>
                     <div className="flex flex-col gap-3">

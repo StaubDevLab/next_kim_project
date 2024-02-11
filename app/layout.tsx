@@ -6,6 +6,7 @@ import AuthProvider from "@/providers/auth-provider";
 import QueryProvider from "@/providers/query-provider";
 import ReduxProvider from "@/providers/redux-provider";
 import React from "react";
+import Footer from "@/app/_components/footer/footer";
 
 
 const poppins = Poppins({
@@ -36,6 +37,7 @@ export default function RootLayout({
               <Header/>
 
               {children}
+                <Footer/>
             </main>
           </ReduxProvider>
         </AuthProvider>
