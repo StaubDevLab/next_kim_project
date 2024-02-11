@@ -32,7 +32,7 @@ export default function ServiceCard({service}: { service: Service }) {
                 <CardContent className={"flex flex-col"}>
                     <div className={"mb-4 flex flex-wrap sm:flex-row gap-3"}>
                         <Badge><Users className={"inline mr-1"}/>{service.public}</Badge>
-                        <Badge><BadgeEuro className={"inline mr-1"}/>{service.price}€</Badge>
+                        <Badge><BadgeEuro className={"inline mr-1"}/>{service.price}</Badge>
                         <Badge><Timer className={"inline mr-1"}/>{service.duration}</Badge>
                     </div>
                     <CardTitle className={"text-primary text-1xl sm:text-2xl "}>{service.title}</CardTitle>

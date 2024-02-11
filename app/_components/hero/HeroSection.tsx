@@ -12,30 +12,34 @@ export default function HeroSection() {
 
             <div className="   flex flex-col flex-grow items-center">
                 <div className=" text-justify flex flex-col">
-                    <div className={"flex flex-col gap-4 py-4 items-center"}>
+                    <div className={"flex flex-col gap-2 py-4 items-center"}>
                         <div className="flex flex-col sm:flex-row items-center gap-4 py-4">
-                            <div>
+                            <a href={"tel:" + process.env.NEXT_PUBLIC_PHONE || "06.86.42.79.49"}>
                                 <Badge className={"text-md"}><Phone size={20}
-                                                                    className={"inline mr-1"}/>{process.env.NEXT_PUBLIC_PHONE ||"06.86.42.79.49" }</Badge>
-                            </div>
-                            <div>
+                                                                    className={"inline mr-1"}/>{process.env.NEXT_PUBLIC_PHONE || "06.86.42.79.49"}
+                                </Badge>
+                            </a>
+                            <a href={"mailto:" + process.env.NEXT_PUBLIC_EMAIL || "contact@kimremy.com"}>
                                 <Badge className={"text-md"}><AtSign size={20}
                                                                      className={"inline mr-1"}/>
                                     {process.env.NEXT_PUBLIC_EMAIL || "contact@kimremy.com"}</Badge>
-                            </div>
+                            </a>
                         </div>
 
-                        {/*<div>*/}
-                        {/*    <Badge className={"text-md"}><MapPin size={20}*/}
-                        {/*                                         className={"inline mr-1"}/>*/}
-                        {/*        Centre "Hollistic",*/}
-                        {/*        1bis avenue de la Bastille*/}
-                        {/*        19100 Brive-La-Gaillarde</Badge>*/}
-                        {/*</div>*/}
+                        <div className={"flex flex-col text-center text-primary"}>
+                            <div className={"font-bold"}><MapPin size={20}
+                                         className={"inline mr-1"}/>Centre "Hollistic",</div>
+                            <div>1bis avenue de la Bastille</div>
+                            <div>19100 Brive-La-Gaillarde</div>
+
+
+
+
+                        </div>
 
                     </div>
                     <div className="flex flex-col gap-3">
-                    <h1 className="text-3xl sm:text-5xl font-bold text-center">Je m&apos;appelle <span
+                        <h1 className="text-3xl sm:text-5xl font-bold text-center">Je m&apos;appelle <span
                             className={"text-primary"}>Kim RÉMY.</span>
                         </h1>
                         <h1 className={"text-3xl sm:text-5xl font-bold text-center "}>
@@ -52,7 +56,8 @@ export default function HeroSection() {
                 </div>
             </div>
             <div className={"px-2 lg:w-full flex-grow-2"}>
-                <Image width={500} height={500} src={"/assets/hero-photo.png"} className={"lg:min-w-[500px] transition-transform duration-500 ease-in-out hover:scale-110"}
+                <Image width={500} height={500} src={"/assets/hero-photo.png"}
+                       className={"lg:min-w-[500px] transition-transform duration-500 ease-in-out hover:scale-110"}
                        alt={"Paysage artistique naturel encerclant un portrait central obscurci"}/>
             </div>
         </div>
