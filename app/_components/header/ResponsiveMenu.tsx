@@ -8,6 +8,7 @@ import Link from "next/link";
 import HeaderLogo from "@/app/_components/header/HeaderLogo";
 import {useSession} from "next-auth/react";
 import HeaderButton from "@/app/_components/header/HeaderButton";
+import HeaderAvatar from "@/app/_components/header/HeaderAvatar";
 
 
 const ResponsiveMenu = () => {
@@ -20,6 +21,7 @@ const ResponsiveMenu = () => {
             <SheetContent side={'left'} className={"flex flex-col"}>
                 <HeaderLogo/>
                 <nav className={'flex flex-col gap-4 text-lg items-start'}>
+                    <HeaderAvatar/>
                     <Link href={'/write'}>
                         <HeaderButton content={"Prendre rdv"}/>
                     </Link>

@@ -13,7 +13,7 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/app/_components/ui/navigation-menu"
-import {useSession} from "next-auth/react";
+
 
 import {usePathname} from "next/navigation";
 import {useCategories} from "@/utils/hooks/useCategories";
@@ -22,8 +22,8 @@ import {Category} from "@prisma/client";
 
 export default function HeaderNavigation() {
     const pathname = usePathname();
-    const session = useSession()
-    const {data: categories, isFetching} = useCategories()
+
+    const {data: categories} = useCategories()
 
     return (
         <NavigationMenu className={cn("hidden md:flex ")}>
@@ -67,20 +67,7 @@ export default function HeaderNavigation() {
                     {pathname === "/about" && <div
                         className="h-1 bg-primary scale-x-100 "></div>}
                 </NavigationMenuItem>
-                {session && session.status === "authenticated" && (
-                    <NavigationMenuItem>
-                        <Link href="/admin" legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Admin
 
-                            </NavigationMenuLink>
-
-
-                        </Link>
-                        {pathname === "/admin" && <div
-                            className="h-1 bg-primary scale-x-100 "></div>}
-                    </NavigationMenuItem>
-                )}
 
             </NavigationMenuList>
         </NavigationMenu>
