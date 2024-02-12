@@ -26,15 +26,7 @@ export const columns: ColumnDef<Service>[] = [
                 </Button>
             )
         },
-        cell: ({row}) => {const amount = parseFloat(row.getValue("price"))
-            const formatted = new Intl.NumberFormat("fr-FR", {
-                style: "currency",
-                currency: "EUR",
-            }).format(amount)
-
-            return <div className="text-right font-medium">{formatted}</div>
-
-        }
+        cell: info => info.getValue()
     },
 
     {

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+
     images: {
 
         remotePatterns: [
@@ -13,6 +14,11 @@ const nextConfig = {
                 hostname: 'ujpadfcfmysbpqeiggpg.supabase.co',
                 port: '',
                 pathname: '/storage/**',
+            },{
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+                port: '',
+                pathname: '/a/**',
             },
         ],
     }

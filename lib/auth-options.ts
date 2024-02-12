@@ -3,7 +3,7 @@ import {PrismaAdapter} from "@auth/prisma-adapter";
 import prisma from "@/lib/db";
 
 
-export const authOptions:{debug: boolean, adapter: any, secret: string, providers: any, callbacks: any} = {
+export const authOptions:{debug: boolean, adapter: any, secret: string, providers: any, callbacks: any, jwt:any} = {
     debug: true,
     adapter: PrismaAdapter(prisma),
     secret: process.env.NEXTAUTH_SECRET as string,
@@ -12,6 +12,10 @@ export const authOptions:{debug: boolean, adapter: any, secret: string, provider
             clientId: process.env.NEXT_PUBLIC_GOOGLE_PROVIDER_CLIENT_ID as string,
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_PROVIDER_CLIENT_SECRET as string,
         })],
+    jwt: {
+        encode: async ({ token }: { token: string }) => token,
+        decode: async ({ token }: { token: string }) => token,
+    },
     callbacks: {
         async signIn({ user , profile } : { user: any, profile: any }) {
             const allowedEmails:Array<string> = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(",") as Array<string>;
@@ -24,6 +28,7 @@ export const authOptions:{debug: boolean, adapter: any, secret: string, provider
 
         },
     },
+
 
 
 }

@@ -24,8 +24,10 @@ export default function Footer() {
                     </Link>
                 </div>
             </nav>
-            <aside className={"text-center"}>
+            <aside className={"text-center flex flex-col gap-3"}>
                 <p>Copyright © 2024 - All right reserved by StaubSdév</p>
+                <p>Icons by <Link href={"https://icons8.com"} className={"underline"}>Icons8</Link></p>
+
             </aside>
         </footer>
     )
