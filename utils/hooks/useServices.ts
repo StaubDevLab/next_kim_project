@@ -4,7 +4,11 @@ import axios from "axios";
 import {Service} from ".prisma/client";
 
 const getServices = async (categoryId?: string)  => {
-    const {data} = await axios.get(`/api/services?category=${categoryId||''}`)
+    const {data} = await axios.get(`/api/services?category=${categoryId||''}`,{
+        params: {
+            sort: "order",
+        },
+    })
 
     return data;
 }

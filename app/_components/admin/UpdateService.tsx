@@ -49,7 +49,9 @@ export default function UpdateService() {
             image: "",
             categoryId: "",
             slug: "",
-            id: ""
+            id: "",
+            imageAlternatif:"",
+            order:0
         }
     })
 
@@ -68,6 +70,8 @@ export default function UpdateService() {
             setValue('duration', service.duration)
             setValue("image", service.image)
             setValue('categoryId', service.categoryId)
+            setValue('imageAlternatif', service.imageAlternatif)
+            setValue('order', service.order)
         } else {
 
             setValue('title', "")
@@ -78,6 +82,8 @@ export default function UpdateService() {
             setValue('duration', "")
             setValue("image", "")
             setValue('categoryId', "")
+            setValue('imageAlternatif', '')
+            setValue('order', 0)
         }
     }, [service, open, clearErrors, setValue]);
     const {mutateAsync: updateMutate, isPending: updatePending} = useMutation({
@@ -193,7 +199,7 @@ export default function UpdateService() {
                         <div className="grid flex-1 gap-2">
                             <div className={"px-3"}>
                                 <div className="mb-6">
-                                    {!imageLoading &&service && service.image || imageObjectUrl ?
+                                    {!imageLoading && service && service.image || imageObjectUrl ?
                                         (
                                             <div className={"relative w-40 h-40 mx-auto mb-4"}>
                                                 <Image src={imageObjectUrl || service.image} fill alt={"image"}/>
@@ -228,6 +234,13 @@ export default function UpdateService() {
                                         <p className={'text-red-600 font-light text-sm mb-2'}>{errors.categoryId.message}</p>}
                                 </div>
                                 <div className={"flex flex-col gap-2 mb-4"}>
+                                    <Label htmlFor="duration">Texte alternatif de l&apos;image :</Label>
+                                    <Input type="text"
+                                           placeholder="Texte alternatif de l'image" {...register("imageAlternatif",)} />
+                                    {errors?.imageAlternatif &&
+                                        <p className={'text-red-600 font-light text-sm mb-2'}>{errors.imageAlternatif.message}</p>}
+                                </div>
+                                <div className={"flex flex-col gap-2 mb-4"}>
                                     <Label htmlFor="duration">Duré du service<span
                                         className={"text-red-600"}>*</span>:</Label>
                                     <Input type="text"
@@ -247,9 +260,9 @@ export default function UpdateService() {
                                     <Label htmlFor="public">Prix<span className={"text-red-600"}>*</span>:</Label>
                                     <div className="relative mt-2 rounded-md shadow-sm">
 
-                                        <Input type="number"
+                                        <Input type="text"
                                                placeholder="Prix" {...register("price", {required: "Champs requis"})}
-                                               min={0.0} step={1.0}/>
+                                               />
                                         <div
                                             className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
           <span className="text-gray-500 sm:text-sm" id="price-currency">
@@ -284,6 +297,26 @@ export default function UpdateService() {
                                                                                  placeholder={"Description détaillée"}  {...field} />}/>
                                     {errors?.description &&
                                         <p className={'text-red-600 font-light text-sm mb-2'}>Champs requis</p>}
+                                </div>
+                                <div className={"flex flex-col gap-2 mb-4"}>
+                                    <Label htmlFor="public">Ordre d&apos;affichage :</Label>
+                                    <div className="relative mt-2 rounded-md shadow-sm">
+
+                                        <Input type="number"
+                                               placeholder="Prix" {...register("order")}
+                                               min={0} step={1}
+                                               defaultValue={0}
+                                        />
+          {/*                              <div*/}
+          {/*                                  className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">*/}
+          {/*<span className="text-gray-500 sm:text-sm" id="price-currency">*/}
+          {/*  €*/}
+          {/*</span>*/}
+          {/*                              </div>*/}
+                                    </div>
+
+                                    {errors?.order &&
+                                        <p className={'text-red-600 font-light text-sm mb-2'}>{errors.order.message}</p>}
                                 </div>
                                 <div className={"flex flex-col gap-2 mb-4"}>
                                     {service && <UpdateActive id={service.id} active={service.active}/>}
