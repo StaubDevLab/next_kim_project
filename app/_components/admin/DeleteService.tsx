@@ -17,21 +17,21 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog"
-export default function DeleteCategory  ({id} : { id:string })  {
-    const {mutateAsync: deleteCategory} = useMutation({
+export default function DeleteService  ({id} : { id:string })  {
+    const {mutateAsync: deleteService} = useMutation({
 
-        mutationFn: () => axios.delete(`/api/categories/${id}`),
+        mutationFn: () => axios.delete(`/api/services/${id}`),
         onSuccess: async () => {
-            await queryClient.invalidateQueries({queryKey: ['categories']})
+            await queryClient.invalidateQueries({queryKey: ['services']})
         }
     })
-    const deleteCategoryTrigger = async () => {
+    const deleteServiceTrigger = async () => {
         try {
 
 
 
 
-            const mutation = await deleteCategory()
+            const mutation = await deleteService()
 
             toast({
                 className: "bg-green-700 text-white z-20",
@@ -59,19 +59,18 @@ export default function DeleteCategory  ({id} : { id:string })  {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button variant="outline">Supprimer</Button>
+                <Button variant="destructive">Supprimer</Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Veux-tu vraiment supprimer cette catégorie?</AlertDialogTitle>
+                    <AlertDialogTitle>Veux-tu vraiment supprimer ce service?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Cette action ne peut pas être annulée. Cela supprimera définitivement la catégorie.
-                        Les services ayant cette catégorie ne seront pas supprimés mais n&apos;appartiendront à plus aucune catégorie.
+                        Cette action ne peut pas être annulée. Cela supprimera définitivement le service.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => deleteCategoryTrigger()}>Continue</AlertDialogAction>
+                    <AlertDialogAction className={"bg-destructive"} onClick={() => deleteServiceTrigger()}>Supprimer</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

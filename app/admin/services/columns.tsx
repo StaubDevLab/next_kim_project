@@ -1,12 +1,18 @@
 "use client"
 import {ColumnDef} from "@tanstack/table-core";
 import {Service} from ".prisma/client";
-import {  ArrowUpDown } from "lucide-react"
+import {ArrowUpDown, MoreVertical} from "lucide-react"
 
 import { Button } from "@/app/_components/ui/button"
 
 import {UpdateTrigger} from "@/app/_components/admin/UpdateTrigger";
 import UpdateActive from "@/app/_components/admin/UpdateActive";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/app/_components/ui/popover"
+import DeleteService from "@/app/_components/admin/DeleteService";
 export const columns: ColumnDef<Service>[] = [
     {
         accessorKey: 'title',
@@ -58,7 +64,16 @@ export const columns: ColumnDef<Service>[] = [
 
 
             return (
-                <UpdateTrigger service={service}/>
+                <Popover>
+                    <PopoverTrigger className="cursor-pointer">
+                        <MoreVertical />
+                    </PopoverTrigger>
+                    <PopoverContent className="flex flex-col gap-2">
+                        <UpdateTrigger service={service}/>
+                        <DeleteService id={service.id}/>
+                    </PopoverContent>
+                </Popover>
+
 
 
             )
@@ -73,7 +88,10 @@ export const columns: ColumnDef<Service>[] = [
 
 
             return (
-                <UpdateActive id={service.id} active={service.active}/>
+
+                        <UpdateActive id={service.id} active={service.active}/>
+
+            
             )
         },
     },

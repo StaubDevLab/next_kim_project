@@ -38,4 +38,26 @@ export const PATCH = async (req:Request,  {params}: { params: { id: string } }) 
     }
 
 }
+export const DELETE = async (req:Request,  {params}: { params: { id: string } }) => {
+    const session = await getServerSession(authOptions);
+    const {id} = params
 
+    if (!session) {
+        return NextResponse.json({error: 'Unauthorized'},
+            {status: 401, headers: {'Content-Type': 'application/json'}});
+    }
+    try {
+
+        const service = await prisma.service.delete({
+            where: {
+                id: id
+            }
+        })
+        return NextResponse.json({message: 'Service supprimé'}, { status: 200 });
+    }catch (e) {
+        console.log(e)
+        return NextResponse.json({error: 'Echec de la suppression'},
+            {status: 500, headers: {'Content-Type': 'application/json'}});
+
+    }
+}
