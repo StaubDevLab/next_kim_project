@@ -26,6 +26,7 @@ export default function HeaderAvatar() {
                 <DropdownMenuContent>
                     <DropdownMenuLabel>Admin</DropdownMenuLabel>
                     <DropdownMenuItem >< Link href={"/admin/services"}>Services</Link></DropdownMenuItem>
+                    <DropdownMenuItem >< Link href={"/admin/categories"}>Catégories</Link></DropdownMenuItem>
                     <DropdownMenuSeparator/>
                     <DropdownMenuItem className={"cursor-pointer"} onClick={() => signOut()}>Se déconnecter</DropdownMenuItem>
 
