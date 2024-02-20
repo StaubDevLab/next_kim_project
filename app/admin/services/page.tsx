@@ -3,8 +3,8 @@ import React, {useState} from "react";
 
 import {open} from "@/stores/dialog-slice";
 import PageContainer from "@/app/_components/ui/page-container";
-import {columns} from "@/app/admin/columns";
-import {DataTable} from "@/app/admin/data-table";
+import {columns} from "@/app/admin/services/columns";
+import {DataTable} from "@/app/admin/services/data-table";
 import {useServices} from "@/utils/hooks/useServices";
 import {useSession} from "next-auth/react";
 import UpdateService from "@/app/_components/admin/UpdateService";
