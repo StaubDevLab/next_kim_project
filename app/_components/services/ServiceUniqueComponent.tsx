@@ -31,7 +31,7 @@ export default function ServiceUniqueComponent({slug}: { slug: string }) {
                     <h1 className={"text-2xl text-primary text-center font-bold "}>{service?.title}</h1>
                     <div className={"mb-4 flex flex-wrap sm:flex-row gap-3"}>
                         <Badge><Users className={"inline mr-1"}/>{service?.public}</Badge>
-                        <Badge><BadgeEuro className={"inline mr-1"}/>{service?.price}€</Badge>
+                        <Badge><BadgeEuro className={"inline mr-1"}/>{service?.price}</Badge>
                         <Badge><Timer className={"inline mr-1"}/>{service?.duration}</Badge>
                     </div>
                     <Image width={400} height={400} className={"rounded-lg "} src={service?.image}
