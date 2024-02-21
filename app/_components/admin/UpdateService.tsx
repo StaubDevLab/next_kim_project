@@ -153,7 +153,7 @@ export default function UpdateService() {
 
 
             data.image = imageObjectUrl || service?.image
-
+            data.order = Number(data.order)
             const mutation = service ? await updateMutate(data) : await addMutate(data)
 
             toast({
