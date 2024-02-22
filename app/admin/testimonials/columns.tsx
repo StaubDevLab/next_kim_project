@@ -34,7 +34,7 @@ export const columns: ColumnDef<Testimonial>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Date de l'atelier
+                    Date de l&apos;atelier
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
