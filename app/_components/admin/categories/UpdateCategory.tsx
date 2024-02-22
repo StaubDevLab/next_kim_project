@@ -32,7 +32,8 @@ const formSchema = z.object({
 type CategoryAndOpen = {
     category:Category | undefined,
     open:boolean,
-    handleOpen: (open:boolean) => void
+    handleOpen: (open:boolean) => void,
+
 }
 export default function UpdateCategory({category, open, handleOpen}:CategoryAndOpen) {
     const form = useForm<z.infer<typeof formSchema>>({
@@ -41,9 +42,13 @@ export default function UpdateCategory({category, open, handleOpen}:CategoryAndO
             title: "",
         },
     })
+
     useEffect(() => {
         if (category) {
+
             form.setValue("title", category.title)
+        }else{
+            form.reset()
         }
     }, [category, form]);
     const {mutateAsync: addMutate, isPending: addPending} = useMutation({
@@ -93,7 +98,10 @@ export default function UpdateCategory({category, open, handleOpen}:CategoryAndO
         }
     }
     return (
-        <Dialog open={open} onOpenChange={(open) => handleOpen(open)} >
+        <Dialog open={open} onOpenChange={(open) => {
+            handleOpen(open)
+
+        }} >
 
             <DialogContent className="lg:max-w-screen-lg overflow-y-auto max-h-[80vh]">
 

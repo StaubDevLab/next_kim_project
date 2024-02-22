@@ -25,7 +25,9 @@ export default function Footer() {
                 </div>
             </nav>
             <aside className={"text-center flex flex-col gap-3"}>
-                <p>Copyright © 2024 - All right reserved by StaubSdév</p>
+                <div className={'flex flex-col items-center'}>
+                   <p >Copyright © 2024 - All right reserved by </p>
+                    <Image className={"p-0"} src={"/assets/staubdev.png"} width={100} height={100} alt={"Logo du développeur StaubDév"}/></div>
                 <p>Icons by <Link href={"https://icons8.com"} className={"underline"}>Icons8</Link></p>
 
             </aside>
