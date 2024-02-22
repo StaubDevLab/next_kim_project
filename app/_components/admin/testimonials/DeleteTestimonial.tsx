@@ -65,7 +65,7 @@ export default function DeleteTestimonial  ({id} : { id:string })  {
                 <AlertDialogHeader>
                     <AlertDialogTitle>Veux-tu vraiment supprimer cet avis ?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Cette action ne peut pas être annulée. Cela supprimera définitivement l'avis.
+                        Cette action ne peut pas être annulée. Cela supprimera définitivement l&apos;avis.
 
                     </AlertDialogDescription>
                 </AlertDialogHeader>
