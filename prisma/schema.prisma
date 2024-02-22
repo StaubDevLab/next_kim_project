@@ -36,6 +36,15 @@ model Category {
   services  Service[]
 }
 
+model Testimonial {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt DateTime @default(now())
+  name      String
+  date      DateTime
+  opinion   String   @db.Text
+  subject   String
+}
+
 model Account {
   id                       String  @id @default(cuid())
   userId                   String

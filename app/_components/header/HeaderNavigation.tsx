@@ -67,7 +67,15 @@ export default function HeaderNavigation() {
                     {pathname === "/about" && <div
                         className="h-1 bg-primary scale-x-100 "></div>}
                 </NavigationMenuItem>
-
+                <NavigationMenuItem>
+                    <Link href="/testimonials" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Témoignages
+                        </NavigationMenuLink>
+                    </Link>
+                    {pathname === "/testimonials" && <div
+                        className="h-1 bg-primary scale-x-100 "></div>}
+                </NavigationMenuItem>
 
             </NavigationMenuList>
         </NavigationMenu>

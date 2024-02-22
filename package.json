@@ -38,6 +38,8 @@
     "clsx": "^2.1.0",
     "dot-env": "^0.0.1",
     "dotenv-cli": "^7.3.0",
+    "embla-carousel-autoplay": "^8.0.0-rc23",
+    "embla-carousel-react": "^8.0.0-rc23",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "lucide-react": "^0.314.0",
