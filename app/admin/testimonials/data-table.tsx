@@ -113,7 +113,7 @@ export function DataTable<TData, TValue>({
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className="h-24 text-center">
-                                Pas de catégorie.
+                                Pas de témoignages.
                             </TableCell>
                         </TableRow>
                     )}

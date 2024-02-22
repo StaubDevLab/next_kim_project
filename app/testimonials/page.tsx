@@ -18,7 +18,7 @@ type Props = {
     params: {}
 }
 export default function Page({params}: Props) {
-    const {data: testimonials} = useTestimonials()
+    const {data: testimonials, isFetching} = useTestimonials()
     const [api, setApi] = React.useState<CarouselApi>()
     const [current, setCurrent] = React.useState(0)
     const [count, setCount] = React.useState(0)
@@ -43,9 +43,10 @@ export default function Page({params}: Props) {
 
         })
     }, [api])
+
     return (
         <section className="">
-            <Separator/>
+
             <div className="container px-6  mx-auto">
                 <div className="grid grid-cols-1 grid-rows-1 items-center gap-4 xl:grid-cols-5">
                     <div className="max-w-2xl mx-auto my-8 space-y-4 text-center xl:col-span-2 xl:text-left">
@@ -53,260 +54,49 @@ export default function Page({params}: Props) {
 
                     </div>
                     <div className="p-6  xl:col-span-3">
-                        <Carousel
-                            setApi={setApi}
-                            opts={{
-                                align: "start",
-                                loop: true,
-                            }}
-                            plugins={[Autoplay({
-                                delay: 20000,
-                                stopOnInteraction: false,
-                                stopOnMouseEnter: true,
-                            }),]}>
-                            <CarouselContent className={"-ml-1"}>
-                                {testimonials?.map((testimonial: Testimonial) => {
-                                    return (
-                                        <CarouselItem key={testimonial.id} className={"pl-1 md:basis-1/2 "}>
-                                            <TestimonialComponent key={testimonial.id} testimonial={testimonial}/>
-                                        </CarouselItem>
+                        {isFetching &&
+                            <div className="flex items-center justify-center space-x-2">
+                                <div className="w-3 h-3 rounded-full animate-pulse bg-primary"></div>
+                                <div className="w-3 h-3 rounded-full animate-pulse bg-primary"></div>
+                                <div className="w-3 h-3 rounded-full animate-pulse bg-primary"></div>
+                            </div>
+                        }
+                        {testimonials && testimonials?.length > 0 ?
+                            <>
+                                <Carousel
+                                    setApi={setApi}
+                                    opts={{
+                                        align: "start",
+                                        loop: true,
+                                    }}
+                                    plugins={[Autoplay({
+                                        delay: 20000,
+                                        stopOnInteraction: false,
+                                        stopOnMouseEnter: true,
+                                    }),]}>
+                                    <CarouselContent className={"-ml-1"}>
+                                        {testimonials?.map((testimonial: Testimonial) => {
+                                            return (
+                                                <CarouselItem key={testimonial.id} className={"pl-1 md:basis-1/2 "}>
+                                                    <TestimonialComponent key={testimonial.id}
+                                                                          testimonial={testimonial}/>
+                                                </CarouselItem>
 
-                                    );
-                                })}
-                                {/*<CarouselItem className={"block md:hidden"}>*/}
+                                            );
+                                        })}
 
-                                {/*</CarouselItem>*/}
-                                {/*{testimonials &&*/}
-                                {/*<CarouselItem className={"hidden md:block"}>*/}
-                                {/*    <div className="grid gap-4 md:grid-cols-2">*/}
+                                    </CarouselContent>
+                                    <CarouselPrevious className={"bg-primary"}/>
+                                    <CarouselNext className={"bg-primary"}/>
+                                </Carousel>
+                                <div className="py-2 w-full flex justify-center items-center">
+                                    {pages}
+                                </div>
+                            </> : !isFetching && <div className="text-center text-3xl">Aucun témoignages encore ...</div>
+                        }
 
-                                {/*         <div className="grid content-center gap-4">*/}
-                                {/*            {testimonials?.map((testimonial: Testimonial) => {*/}
-                                {/*                return (*/}
-                                {/*                    <TestimonialComponent key={testimonial.id} testimonial={testimonial}/>*/}
-                                {/*                );*/}
-                                {/*            })}*/}
 
-                                {/*        </div>*/}
-
-                                {/*        /!*<div className="grid content-center gap-4">*!/*/}
-                                {/*        /!*    <div className="p-6 rounded shadow-md dark:bg-gray-900">*!/*/}
-                                {/*        /!*        <p>Putant omnium elaboraret per ut. Id dicta tritani nominavi quo, mea*!/*/}
-                                {/*        /!*            id justo*!/*/}
-                                {/*        /!*            errem elaboraret. Agam mollis scripserit ea his, ut nec postea*!/*/}
-                                {/*        /!*            verear persecuti.*!/*/}
-                                {/*        /!*            Ea noster senserit eam, ferri omittantur ei nec. Id mel solet libris*!/*/}
-                                {/*        /!*            efficiantur, commune explicari et eos. Case movet ad est, sed tota*!/*/}
-                                {/*        /!*            vocent*!/*/}
-                                {/*        /!*            appetere ea.</p>*!/*/}
-                                {/*        /!*        <div className="flex items-center mt-4 space-x-4">*!/*/}
-                                {/*        /!*            <img src="https://source.unsplash.com/50x50/?portrait?3" alt=""*!/*/}
-                                {/*        /!*                 className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*!/*/}
-                                {/*        /!*            <div>*!/*/}
-                                {/*        /!*                <p className="text-lg font-semibold">Leroy Jenkins</p>*!/*/}
-                                {/*        /!*                <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*!/*/}
-                                {/*        /!*            </div>*!/*/}
-                                {/*        /!*        </div>*!/*/}
-                                {/*        /!*    </div>*!/*/}
-                                {/*        /!*    <div className="p-6 rounded shadow-md dark:bg-gray-900">*!/*/}
-                                {/*        /!*        <p>Te omnes virtute volutpat sed. Ei esse eros interesset vel, ei populo*!/*/}
-                                {/*        /!*            denique*!/*/}
-                                {/*        /!*            ocurreret vix, eu cum pertinax mandamus vituperatoribus. Solum nihil*!/*/}
-                                {/*        /!*            luptatum*!/*/}
-                                {/*        /!*            per ex, ei amet viderer eos. Ea illum labitur mnesarchum pro. Eius*!/*/}
-                                {/*        /!*            meis*!/*/}
-                                {/*        /!*            salutandi ei nam, alterum expetenda et nec. Expetenda intellegat at*!/*/}
-                                {/*        /!*            eum, per*!/*/}
-                                {/*        /!*            mazim sanctus honestatis ad. Ei noluisse invenire vix. Te ancillae*!/*/}
-                                {/*        /!*            patrioque*!/*/}
-                                {/*        /!*            qui, probo bonorum vivendum ex vim.</p>*!/*/}
-                                {/*        /!*        <div className="flex items-center mt-4 space-x-4">*!/*/}
-                                {/*        /!*            <img src="https://source.unsplash.com/50x50/?portrait?4" alt=""*!/*/}
-                                {/*        /!*                 className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*!/*/}
-                                {/*        /!*            <div>*!/*/}
-                                {/*        /!*                <p className="text-lg font-semibold">Leroy Jenkins</p>*!/*/}
-                                {/*        /!*                <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*!/*/}
-                                {/*        /!*            </div>*!/*/}
-                                {/*        /!*        </div>*!/*/}
-                                {/*        /!*    </div>*!/*/}
-                                {/*        /!*</div>*!/*/}
-                                {/*    </div>*/}
-
-                                {/*</CarouselItem>*/}
-                                {/*}*/}
-                                {/*<CarouselItem>*/}
-
-                                {/*    <div className="grid gap-4 md:grid-cols-2">*/}
-
-                                {/*        <div className="grid content-center gap-4">*/}
-                                {/*            <div className="p-6 rounded shadow-md dark:bg-gray-900">*/}
-                                {/*                <p>An audire commodo habemus cum. Ne sed corrumpit repudiandae. Tota*/}
-                                {/*                    aliquip*/}
-                                {/*                    democritum pro in, nec democritum intellegam ne. Propriae volutpat*/}
-                                {/*                    dissentiet ea*/}
-                                {/*                    sit, nec at lorem inani tritani, an ius populo perfecto*/}
-                                {/*                    vituperatoribus. Eu cum*/}
-                                {/*                    case modus salutandi, ut eum vocent sensibus reprehendunt.</p>*/}
-                                {/*                <div className="flex items-center mt-4 space-x-4">*/}
-                                {/*                    <img src="https://source.unsplash.com/50x50/?portrait?1" alt=""*/}
-                                {/*                         className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*/}
-                                {/*                    <div>*/}
-                                {/*                        <p className="text-lg font-semibold">Leroy Jenkins</p>*/}
-                                {/*                        <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*            <div className="p-6 rounded shadow-md dark:bg-gray-900">*/}
-                                {/*                <p>Sit wisi sapientem ut, pri civibus temporibus voluptatibus et, ius cu*/}
-                                {/*                    hinc*/}
-                                {/*                    fabulas. Nam meliore minimum et, regione convenire cum id. Ex pro*/}
-                                {/*                    eros mucius*/}
-                                {/*                    consectetuer, pro magna nulla nonumy ne, eam putent iudicabit*/}
-                                {/*                    consulatu cu.</p>*/}
-                                {/*                <div className="flex items-center mt-4 space-x-4">*/}
-                                {/*                    <img src="https://source.unsplash.com/50x50/?portrait?2" alt=""*/}
-                                {/*                         className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*/}
-                                {/*                    <div>*/}
-                                {/*                        <p className="text-lg font-semibold">Leroy Jenkins</p>*/}
-                                {/*                        <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*        </div>*/}
-
-                                {/*        <div className="grid content-center gap-4">*/}
-                                {/*            <div className="p-6 rounded shadow-md dark:bg-gray-900">*/}
-                                {/*                <p>Putant omnium elaboraret per ut. Id dicta tritani nominavi quo, mea*/}
-                                {/*                    id justo*/}
-                                {/*                    errem elaboraret. Agam mollis scripserit ea his, ut nec postea*/}
-                                {/*                    verear persecuti.*/}
-                                {/*                    Ea noster senserit eam, ferri omittantur ei nec. Id mel solet libris*/}
-                                {/*                    efficiantur, commune explicari et eos. Case movet ad est, sed tota*/}
-                                {/*                    vocent*/}
-                                {/*                    appetere ea.</p>*/}
-                                {/*                <div className="flex items-center mt-4 space-x-4">*/}
-                                {/*                    <img src="https://source.unsplash.com/50x50/?portrait?3" alt=""*/}
-                                {/*                         className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*/}
-                                {/*                    <div>*/}
-                                {/*                        <p className="text-lg font-semibold">Leroy Jenkins</p>*/}
-                                {/*                        <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*            <div className="p-6 rounded shadow-md dark:bg-gray-900">*/}
-                                {/*                <p>Te omnes virtute volutpat sed. Ei esse eros interesset vel, ei populo*/}
-                                {/*                    denique*/}
-                                {/*                    ocurreret vix, eu cum pertinax mandamus vituperatoribus. Solum nihil*/}
-                                {/*                    luptatum*/}
-                                {/*                    per ex, ei amet viderer eos. Ea illum labitur mnesarchum pro. Eius*/}
-                                {/*                    meis*/}
-                                {/*                    salutandi ei nam, alterum expetenda et nec. Expetenda intellegat at*/}
-                                {/*                    eum, per*/}
-                                {/*                    mazim sanctus honestatis ad. Ei noluisse invenire vix. Te ancillae*/}
-                                {/*                    patrioque*/}
-                                {/*                    qui, probo bonorum vivendum ex vim.</p>*/}
-                                {/*                <div className="flex items-center mt-4 space-x-4">*/}
-                                {/*                    <img src="https://source.unsplash.com/50x50/?portrait?4" alt=""*/}
-                                {/*                         className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*/}
-                                {/*                    <div>*/}
-                                {/*                        <p className="text-lg font-semibold">Leroy Jenkins</p>*/}
-                                {/*                        <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*</CarouselItem>*/}
-                                {/*<CarouselItem>*/}
-                                {/*    <div className="grid gap-4 md:grid-cols-2">*/}
-
-                                {/*        <div className="grid content-center gap-4">*/}
-                                {/*            <div className="p-6 rounded shadow-md dark:bg-gray-900">*/}
-                                {/*                <p>An audire commodo habemus cum. Ne sed corrumpit repudiandae. Tota*/}
-                                {/*                    aliquip*/}
-                                {/*                    democritum pro in, nec democritum intellegam ne. Propriae volutpat*/}
-                                {/*                    dissentiet ea*/}
-                                {/*                    sit, nec at lorem inani tritani, an ius populo perfecto*/}
-                                {/*                    vituperatoribus. Eu cum*/}
-                                {/*                    case modus salutandi, ut eum vocent sensibus reprehendunt.</p>*/}
-                                {/*                <div className="flex items-center mt-4 space-x-4">*/}
-                                {/*                    <img src="https://source.unsplash.com/50x50/?portrait?1" alt=""*/}
-                                {/*                         className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*/}
-                                {/*                    <div>*/}
-                                {/*                        <p className="text-lg font-semibold">Leroy Jenkins</p>*/}
-                                {/*                        <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*            <div className="p-6 rounded shadow-md dark:bg-gray-900">*/}
-                                {/*                <p>Sit wisi sapientem ut, pri civibus temporibus voluptatibus et, ius cu*/}
-                                {/*                    hinc*/}
-                                {/*                    fabulas. Nam meliore minimum et, regione convenire cum id. Ex pro*/}
-                                {/*                    eros mucius*/}
-                                {/*                    consectetuer, pro magna nulla nonumy ne, eam putent iudicabit*/}
-                                {/*                    consulatu cu.</p>*/}
-                                {/*                <div className="flex items-center mt-4 space-x-4">*/}
-                                {/*                    <img src="https://source.unsplash.com/50x50/?portrait?2" alt=""*/}
-                                {/*                         className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*/}
-                                {/*                    <div>*/}
-                                {/*                        <p className="text-lg font-semibold">Leroy Jenkins</p>*/}
-                                {/*                        <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*        </div>*/}
-
-                                {/*        <div className="grid content-center gap-4">*/}
-                                {/*            <div className="p-6 rounded shadow-md dark:bg-gray-900">*/}
-                                {/*                <p>Putant omnium elaboraret per ut. Id dicta tritani nominavi quo, mea*/}
-                                {/*                    id justo*/}
-                                {/*                    errem elaboraret. Agam mollis scripserit ea his, ut nec postea*/}
-                                {/*                    verear persecuti.*/}
-                                {/*                    Ea noster senserit eam, ferri omittantur ei nec. Id mel solet libris*/}
-                                {/*                    efficiantur, commune explicari et eos. Case movet ad est, sed tota*/}
-                                {/*                    vocent*/}
-                                {/*                    appetere ea.</p>*/}
-                                {/*                <div className="flex items-center mt-4 space-x-4">*/}
-                                {/*                    <img src="https://source.unsplash.com/50x50/?portrait?3" alt=""*/}
-                                {/*                         className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*/}
-                                {/*                    <div>*/}
-                                {/*                        <p className="text-lg font-semibold">Leroy Jenkins</p>*/}
-                                {/*                        <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*            <div className="p-6 rounded shadow-md dark:bg-gray-900">*/}
-                                {/*                <p>Te omnes virtute volutpat sed. Ei esse eros interesset vel, ei populo*/}
-                                {/*                    denique*/}
-                                {/*                    ocurreret vix, eu cum pertinax mandamus vituperatoribus. Solum nihil*/}
-                                {/*                    luptatum*/}
-                                {/*                    per ex, ei amet viderer eos. Ea illum labitur mnesarchum pro. Eius*/}
-                                {/*                    meis*/}
-                                {/*                    salutandi ei nam, alterum expetenda et nec. Expetenda intellegat at*/}
-                                {/*                    eum, per*/}
-                                {/*                    mazim sanctus honestatis ad. Ei noluisse invenire vix. Te ancillae*/}
-                                {/*                    patrioque*/}
-                                {/*                    qui, probo bonorum vivendum ex vim.</p>*/}
-                                {/*                <div className="flex items-center mt-4 space-x-4">*/}
-                                {/*                    <img src="https://source.unsplash.com/50x50/?portrait?4" alt=""*/}
-                                {/*                         className="w-12 h-12 bg-center bg-cover rounded-full dark:bg-gray-500"/>*/}
-                                {/*                    <div>*/}
-                                {/*                        <p className="text-lg font-semibold">Leroy Jenkins</p>*/}
-                                {/*                        <p className="text-sm dark:text-gray-400">CTO of Company Co.</p>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*</CarouselItem>*/}
-                            </CarouselContent>
-                            <CarouselPrevious className={"bg-primary"}/>
-                            <CarouselNext className={"bg-primary"}/>
-                        </Carousel>
-                        <div className="py-2 w-full flex justify-center items-center">
-                            {pages}
-                        </div>
-                    </div>
+                </div>
                 </div>
             </div>
         </section>
