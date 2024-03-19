@@ -11,21 +11,22 @@ export async function POST(req:Request, res:Request) {
     // @ts-ignore
     const emailHtml = render(EmailToClientTemplateCustom({name}));
     const optionsToClient = {
-        from: process.env.NEXT_PUBLIC_EMAIL ||"contact@kimremy.com",
+        from: process.env.NEXT_PUBLIC_EMAIL || "contact@kimremy.com",
         to: email,
         subject: 'Kim Remy - Prise en compte de votre demande',
         html: emailHtml,
     };
     const emailHtmlToInfos = render(EmailInfoTemplate({ name, email, tel, subject, message }));
     const optionsToInfos = {
-        from:  process.env.NEXT_PUBLIC_EMAIL ||"contact@kimremy.com",
-        to:  process.env.NEXT_PUBLIC_EMAIL ||"contact@kimremy.com",
+        from:  process.env.NEXT_PUBLIC_EMAIL || "contact@kimremy.com",
+        to:  process.env.NEXT_PUBLIC_EMAIL || "contact@kimremy.com",
         subject: 'Kim Remy - Nouvelle demande',
         html: emailHtmlToInfos,
     };
     try {
-        await sendgrid.send(optionsToClient).then(res =>  sendgrid.send(optionsToInfos)).catch(err => console.log(err));
-        // await sendgrid.send(optionsToInfos).then(res => console.log(res)).catch(err => console.log(err));
+        await sendgrid.send(optionsToInfos).then(res => console.log(res)).catch(err => console.log(err));
+
+        await sendgrid.send(optionsToClient).then(res => console.log(res)).catch(err => console.log(err));
 
         return Response.json({ }, { status: 200 });
     } catch (error) {
