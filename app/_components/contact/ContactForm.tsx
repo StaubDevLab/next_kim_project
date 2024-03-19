@@ -11,7 +11,7 @@ import {BadgeCheck, BadgeX} from "lucide-react";
 import {Toaster} from "@/app/_components/ui/toaster";
 
 export function ContactForm() {
-    const {control, register, formState: {errors}, reset} = useForm({
+    const {control, register, formState: {errors, isSubmitting}, reset} = useForm({
         defaultValues: {
             name: '',
             email: '',
@@ -98,7 +98,8 @@ export function ContactForm() {
                     {errors?.message && <p className={'text-red-600 font-light text-sm'}>{errors.message.message}</p>}
                 </div>
                 <div className={"flex self-center"}>
-                    <Button type={"submit"}>Envoyer</Button>
+                    <Button disabled={isSubmitting} type={"submit"}>{isSubmitting ? <div
+                        className="border-gray-300 h-8 w-8 animate-spin rounded-full border-8 border-t-secondary px-2"/> : "Envoyer"}</Button>
                 </div>
 
             </Form>

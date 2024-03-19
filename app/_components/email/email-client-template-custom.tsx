@@ -87,4 +87,4 @@ export const EmailToClientTemplateCustom = ({
     );
 };
 
-export default EmailToClientTemplateCustom;
+
