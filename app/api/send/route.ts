@@ -24,8 +24,8 @@ export async function POST(req:Request, res:Request) {
         html: emailHtmlToInfos,
     };
     try {
-        await sendgrid.send(optionsToClient).then(res => console.log(res)).catch(err => console.log(err));
-        await sendgrid.send(optionsToInfos).then(res => console.log(res)).catch(err => console.log(err));
+        await sendgrid.send(optionsToClient).then(res =>  sendgrid.send(optionsToInfos)).catch(err => console.log(err));
+        // await sendgrid.send(optionsToInfos).then(res => console.log(res)).catch(err => console.log(err));
 
         return Response.json({ }, { status: 200 });
     } catch (error) {
